@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:pharmacy/constans.dart';
+import 'package:pharmacy/controller/login_controller.dart';
 
 class CustomTextField extends StatelessWidget {
-   CustomTextField(
+   const CustomTextField(
       {super.key,
       this.isPassword,
       this.keyboardType,
@@ -12,6 +14,8 @@ class CustomTextField extends StatelessWidget {
       this.hintText,
       this.maxLines = 1,
       this.onSaved,
+      this.filled,
+      this.filledColor,
       this.onChanged,
       this.label});
   final String? hintText;
@@ -19,6 +23,8 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final String? label;
   final bool? isPassword;
+  final bool? filled;
+  final Color? filledColor;
   final Icon? suffixIcon;
   final Icon? prefixIcon;
   final TextInputType? keyboardType;
@@ -28,7 +34,10 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
+      child: GetBuilder<LoginController>(
+        init: LoginController(),
+        builder: (controller){
+        return  TextFormField(
         validator: (data) {
           if (data?.isEmpty ?? true) {
             return 'required field';
@@ -41,9 +50,13 @@ class CustomTextField extends StatelessWidget {
         maxLines: maxLines,
         cursorColor: kMainColor,
         initialValue: initialValue,
-        obscureText: isPassword??false,
+        obscureText: isPassword==true?controller.obscureText:false,
         decoration: InputDecoration(
-          suffixIcon:suffixIcon,
+          filled: filled??false,
+          fillColor: filledColor??Colors.white,
+          suffixIcon: isPassword==true ? IconButton(onPressed: (){
+            controller.showPassword();
+          }, icon: suffixIcon!):suffixIcon ,
           prefixIcon: prefixIcon, 
           hintText: hintText,
           enabledBorder: buildBorder(color:kBorderColor),
@@ -54,8 +67,9 @@ class CustomTextField extends StatelessWidget {
             style: TextStyle(color: kMainColor),
           ),
         ),
-      ),
-    );
+      );
+      })  ,
+          );
   }
 }
 

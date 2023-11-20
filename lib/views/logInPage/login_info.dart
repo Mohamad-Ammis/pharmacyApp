@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy/constans.dart';
@@ -24,37 +25,53 @@ class LogInInfo extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(right: 200, left: 100, top: 100),
+          padding: const EdgeInsets.only(right: 300, left: 100, top: 100),
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children:  [
+                const
                 Text(
                   'Login To Your Account!',
                   style: TextStyle(
                       color: kMainColor, fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                CustomTextField(
+                const CustomTextField(
                   label: 'Email',
-                  suffixIcon: Icon(Icons.email,color: kMainColor,),
+                  prefixIcon: Icon(Icons.email,color: kMainColor,),
+                  filled: true,
+                  filledColor: Color(0xffEBEBEB),
                 ),
-                CustomTextField(
+                const CustomTextField(
                   label: 'Password',
                   isPassword: true,
-                  suffixIcon:  Icon(
+                  prefixIcon:  Icon(
                     Icons.lock,
                     color: kMainColor,
                   ),
+                  filled: true,
+                  filledColor: Color(0xffEBEBEB),
+                  suffixIcon: Icon(Icons.remove_red_eye_sharp,color: Color.fromARGB(255, 172, 172, 172),),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                CustomButton(buttonText: 'LogIn', isLoading: false,
-                onTap: (){
-                  Get.to(HomePage());
+                CustomButton(buttonText: 'Login', isLoading: false,
+                onTap: ()async{
+                  AwesomeDialog(
+                    width: 500,
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.rightSlide,
+            title: 'Login Success',
+            titleTextStyle: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),
+            desc: 'Welcome in Our World',
+            ).show();
+            await Future.delayed(const Duration(seconds: 3));
+            Get.to(const HomePage());
                 },
                 ),
               ],
