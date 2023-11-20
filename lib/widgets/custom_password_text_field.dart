@@ -43,7 +43,7 @@ class CustomPasswordTextField extends StatelessWidget {
             onTap: (){
               controller.showPassword();
             },
-            child: Icon(Icons.remove_red_eye_sharp),
+            child:const  Icon(Icons.remove_red_eye_sharp),
           ),
           hintText: hintText,
           enabledBorder: buildBorder(color: kBorderColor),
@@ -51,7 +51,7 @@ class CustomPasswordTextField extends StatelessWidget {
           border: buildBorder(color: kBorderColor),
           label: Text(
             label!,
-            style: TextStyle(color: kMainColor),
+            style:const  TextStyle(color: kMainColor),
           ),
         ),
       );

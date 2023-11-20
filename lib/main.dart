@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
          //   textTheme: GoogleFonts.notoSerifTextTheme(Theme.of(context).textTheme),
             ),
-        home: LogInBody(),
+        home:const  LogInBody(),
         
         );
   }

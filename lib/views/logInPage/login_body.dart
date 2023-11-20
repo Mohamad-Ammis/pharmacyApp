@@ -9,7 +9,7 @@ class LogInBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 235, 235, 235),
+      backgroundColor:const Color.fromARGB(255, 235, 235, 235),
       body: Stack(
         children: [
           Positioned(
@@ -30,7 +30,7 @@ class LogInBody extends StatelessWidget {
             ),
           child: Stack(
             children: [
-              Row(
+              const Row(
                 children: [
                   LogInInfo(),
                   LogInStyle()

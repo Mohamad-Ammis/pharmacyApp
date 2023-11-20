@@ -67,7 +67,7 @@ class LogInInfo extends StatelessWidget {
             dialogType: DialogType.success,
             animType: AnimType.rightSlide,
             title: 'Login Success',
-            titleTextStyle: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),
+            titleTextStyle:const  TextStyle(fontSize: 22,fontWeight: FontWeight.bold),
             desc: 'Welcome in Our World',
             ).show();
             await Future.delayed(const Duration(seconds: 3));

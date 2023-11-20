@@ -17,26 +17,26 @@ class CustomButton extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 60,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: kMainColor,
+            gradient: const LinearGradient(colors: [
+              kMainColor,
+              Color.fromARGB(255, 39, 42, 80),
+            ])),
         child: Center(
           child: isLoading
-              ? CircularProgressIndicator(
+              ?  const CircularProgressIndicator(
                   color: Colors.grey,
                 )
               : Text(
                   buttonText,
-                  style: TextStyle(
+                  style:  const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold),
                 ),
         ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: kMainColor,
-            gradient: LinearGradient(colors: [
-              kMainColor,
-              Color.fromARGB(255, 39, 42, 80),
-            ])),
       ),
     );
   }
