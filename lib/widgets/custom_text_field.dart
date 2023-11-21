@@ -63,7 +63,7 @@ class CustomTextField extends StatelessWidget {
           focusedBorder: buildBorder(color: kMainColor),
           border: buildBorder(color: kBorderColor),
           label: Text(
-            label!,
+            label??'',
             style: TextStyle(color: kMainColor),
           ),
         ),

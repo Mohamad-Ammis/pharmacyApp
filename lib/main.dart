@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/views/HomePage/homepage.dart';
 import 'package:pharmacy/views/logInPage/login_body.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
          //   textTheme: GoogleFonts.notoSerifTextTheme(Theme.of(context).textTheme),
             ),
         home:const  LogInBody(),
+        getPages: [
+          GetPage(name: '/HomePage', page: ()=>HomePage()),
+        ],
         
         );
   }

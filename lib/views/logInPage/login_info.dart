@@ -2,7 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy/constans.dart';
-import 'package:pharmacy/views/HomePage/homepage.dart';
 import 'package:pharmacy/widgets/Custom_Button.dart';
 import 'package:pharmacy/widgets/custom_text_field.dart';
 
@@ -27,6 +26,7 @@ class LogInInfo extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(right: 300, left: 100, top: 100),
           child: Form(
+            
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
@@ -71,7 +71,7 @@ class LogInInfo extends StatelessWidget {
             desc: 'Welcome in Our World',
             ).show();
             await Future.delayed(const Duration(seconds: 3));
-            Get.to(const HomePage());
+            Get.toNamed('/HomePage');
                 },
                 ),
               ],
