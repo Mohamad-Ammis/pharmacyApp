@@ -30,7 +30,7 @@ class LogInBody extends StatelessWidget {
             ),
           child: Stack(
             children: [
-              const Row(
+               Row(
                 children: [
                   LogInInfo(),
                   LogInStyle()

@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController {
-  bool obscureText = true;
+class AddProductController extends GetxController {
+  bool nextToArabicForm = false;
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  String? email;
-  void showPassword() {
-    if (obscureText == true) {
-      obscureText = false;
-    } else {
-      obscureText = true;
-    }
-    update();
-  }
 
+void updateUi(){
+  update();
+}
   bool validateInput() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -25,12 +19,5 @@ class LoginController extends GetxController {
       update();
       return false;
     }
-  }
-
-  String isEmail(String em) {
-    if(!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$').hasMatch(em)){
-      return 'Invalid Email';
-    }
-    return '';
   }
 }

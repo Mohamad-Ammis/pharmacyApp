@@ -4,26 +4,31 @@ import 'package:pharmacy/constans.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton(
       {super.key,
+      this.color,
       required this.buttonText,
       this.onTap,
       required this.isLoading});
   final String buttonText;
   final void Function()? onTap;
   final bool isLoading;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width,
         height: 60,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: kMainColor,
-            gradient: const LinearGradient(colors: [
+            color: color,
+            gradient:color==null ? const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+              
               kMainColor,
-              Color.fromARGB(255, 39, 42, 80),
-            ])),
+              Color.fromARGB(255, 121, 126, 197),
+            ]):null),
         child: Center(
           child: isLoading
               ?  const CircularProgressIndicator(

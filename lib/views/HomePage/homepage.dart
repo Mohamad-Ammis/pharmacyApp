@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constans.dart';
-import 'package:pharmacy/widgets/custom_text_field.dart';
+import 'package:pharmacy/core/enums/device_type.dart';
+import 'package:pharmacy/helper/get_device_type.dart';
+import 'package:pharmacy/views/HomePage/add_product.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,55 +14,33 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   bool isExpanded = false;
-  final List<Widget> screens = [
-    Container(
-      child: Text('one'),
-      color: Colors.pink,
-    ),
-    Container(
-      child: Text('two'),
-    ),
-    Expanded(
-      child: Container(
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 200),
-          child: Column(
-            children: [
-              Row(children: [
-                SizedBox(width:200,
-                  child: CustomTextField(
-                      label: 'Scientific Name',
-                    ),
-                ),
-                  SizedBox(width:200,
-                    child: CustomTextField(
-                      label: 'Brand Name',
-                    ),
-                  ),
-              ],),
-              CustomTextField(
-                label: 'asd',
-              ),
-              CustomTextField(
-                label: 'asd',
-              ),
-              CustomTextField(
-                label: 'asd',
-              )
-            ],
-          ),
-        ),
-      ),
-    ),
-    Container(
-      child: Text('one'),
-    ),
-  ];
+
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      Expanded(
+        child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Center(child: Text('One')),
+            color: Colors.amber.shade100),
+      ),
+      Expanded(
+        child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Center(child: Text('Two')),
+            color: Colors.pink.shade100),
+      ),
+      AddProduct(),
+           Expanded(
+        child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Center(child: Text('four')),
+            color: Colors.green.shade100),
+      ),
+    ];
     return Scaffold(
-      bottomNavigationBar: MediaQuery.of(context).size.width < 640
+      bottomNavigationBar: 
+      getDeviceType(MediaQuery.of(context))==DeviceType.Mobile
           ? BottomNavigationBar(
               currentIndex: selectedIndex,
               unselectedItemColor: Colors.green,
@@ -82,10 +62,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           if (MediaQuery.of(context).size.width >= 640)
             NavigationRail(
-              selectedIconTheme: IconThemeData(color: Colors.white),
-              backgroundColor: Color.fromARGB(95, 0, 0, 0),
+              selectedIconTheme: IconThemeData(color: kMainColor),
+              backgroundColor: kMainColor,
               unselectedIconTheme: IconThemeData(color: Colors.white),
-              indicatorColor: kMainColor,
+              indicatorColor: Colors.white,
               onDestinationSelected: changeDestination,
               selectedIndex: selectedIndex,
               destinations: const [

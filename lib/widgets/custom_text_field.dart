@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/controller/login_controller.dart';
+import 'package:pharmacy/helper/build_border.dart';
 
 class CustomTextField extends StatelessWidget {
    const CustomTextField(
@@ -10,6 +11,7 @@ class CustomTextField extends StatelessWidget {
       this.keyboardType,
       this.suffixIcon,
       this.prefixIcon,
+      this.floatingLabelBehavior,
       this.initialValue,
       this.hintText,
       this.maxLines = 1,
@@ -17,6 +19,7 @@ class CustomTextField extends StatelessWidget {
       this.filled,
       this.filledColor,
       this.onChanged,
+      this.validator,
       this.label});
   final String? hintText;
   final String? initialValue;
@@ -27,18 +30,20 @@ class CustomTextField extends StatelessWidget {
   final Color? filledColor;
   final Icon? suffixIcon;
   final Icon? prefixIcon;
+  final FloatingLabelBehavior? floatingLabelBehavior;
   final TextInputType? keyboardType;
   final void Function(String?)? onSaved;
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 10),
       child: GetBuilder<LoginController>(
         init: LoginController(),
         builder: (controller){
         return  TextFormField(
-        validator: (data) {
+        validator:validator?? (data) {
           if (data?.isEmpty ?? true) {
             return 'required field';
           }
@@ -52,6 +57,7 @@ class CustomTextField extends StatelessWidget {
         initialValue: initialValue,
         obscureText: isPassword==true?controller.obscureText:false,
         decoration: InputDecoration(
+          
           filled: filled??false,
           fillColor: filledColor??Colors.white,
           suffixIcon: isPassword==true ? IconButton(onPressed: (){
@@ -59,6 +65,7 @@ class CustomTextField extends StatelessWidget {
           }, icon: suffixIcon!):suffixIcon ,
           prefixIcon: prefixIcon, 
           hintText: hintText,
+          floatingLabelBehavior: floatingLabelBehavior??FloatingLabelBehavior.auto,
           enabledBorder: buildBorder(color:kBorderColor),
           focusedBorder: buildBorder(color: kMainColor),
           border: buildBorder(color: kBorderColor),
@@ -73,9 +80,3 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-OutlineInputBorder buildBorder({required Color color}) {
-  return OutlineInputBorder(
-    borderSide: BorderSide(color: color,width: 1.3),
-    borderRadius: BorderRadius.circular(16),
-  );
-}
