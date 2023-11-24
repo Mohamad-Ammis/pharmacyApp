@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy/views/HomePage/homepage.dart';
 import 'package:pharmacy/views/logInPage/login_body.dart';
 import 'package:get/get.dart';
-
 void main() {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //     statusBarColor: Colors.transparent,
@@ -15,14 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+
+    return  
+    GetMaterialApp(
       debugShowCheckedModeBanner: false,
         theme: ThemeData(
          //   textTheme: GoogleFonts.notoSerifTextTheme(Theme.of(context).textTheme),
             ),
         home:const  LogInBody(),
         getPages: [
-          GetPage(name: '/HomePage', page: ()=>HomePage()),
+          GetPage(name: '/HomePage', page: ()=>const HomePage()),
         ],
         
         );

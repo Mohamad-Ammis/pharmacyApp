@@ -5,16 +5,16 @@ DeviceType getDeviceType(MediaQueryData mediaQueryData) {
   //Orientation orientation = mediaQueryData.orientation;
   double width = 0;
   //if (orientation == Orientation.landscape) {
-   // width = mediaQueryData.size.height;
+  // width = mediaQueryData.size.height;
   //} else {
-    width = mediaQueryData.size.width;
+  width = mediaQueryData.size.width;
   //}
-  
-  if (width >= 950) {
-    return DeviceType.Desktop;
+
+  if (width >= 1024) {
+    return DeviceType.desktop;
   } else if (width >= 640) {
-    return DeviceType.Tablet;
+    return DeviceType.tablet;
   } else {
-    return DeviceType.Mobile;
+    return DeviceType.mobile;
   }
 }

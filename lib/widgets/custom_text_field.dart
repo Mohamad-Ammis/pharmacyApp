@@ -71,7 +71,7 @@ class CustomTextField extends StatelessWidget {
           border: buildBorder(color: kBorderColor),
           label: Text(
             label??'',
-            style: TextStyle(color: kMainColor),
+            style:const  TextStyle(color: kMainColor),
           ),
         ),
       );

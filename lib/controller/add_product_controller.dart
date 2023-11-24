@@ -4,11 +4,10 @@ import 'package:get/get.dart';
 class AddProductController extends GetxController {
   bool nextToArabicForm = false;
   GlobalKey<FormState> formKey = GlobalKey();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  double localWidth=0;
+  double fullScreenWidth=0;
 
-void updateUi(){
-  update();
-}
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   bool validateInput() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();

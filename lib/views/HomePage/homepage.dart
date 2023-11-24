@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/core/enums/device_type.dart';
 import 'package:pharmacy/helper/get_device_type.dart';
-import 'package:pharmacy/views/HomePage/add_product.dart';
+import 'package:pharmacy/views/addproduct/add_product.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,50 +21,51 @@ class _HomePageState extends State<HomePage> {
       Expanded(
         child: Container(
             height: MediaQuery.of(context).size.height,
-            child: Center(child: Text('One')),
-            color: Colors.amber.shade100),
+            color: Colors.amber.shade100,
+            child:const  Center(child: Text('One'))),
       ),
       Expanded(
         child: Container(
             height: MediaQuery.of(context).size.height,
-            child: Center(child: Text('Two')),
-            color: Colors.pink.shade100),
+            color: Colors.pink.shade100,
+            child: const Center(child: Text('Two'))),
       ),
       AddProduct(),
-           Expanded(
+      Expanded(
         child: Container(
             height: MediaQuery.of(context).size.height,
-            child: Center(child: Text('four')),
-            color: Colors.green.shade100),
+            color: Colors.green.shade100,
+            child: const Center(child: Text('four'))),
       ),
     ];
     return Scaffold(
-      bottomNavigationBar: 
-      getDeviceType(MediaQuery.of(context))==DeviceType.Mobile
-          ? BottomNavigationBar(
-              currentIndex: selectedIndex,
-              unselectedItemColor: Colors.green,
-              selectedItemColor: Colors.blue,
-              onTap: changeDestination,
-              items: const [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: 'Home'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.history), label: 'History'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.add_box_rounded), label: 'AddProduct'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.settings), label: 'Settings')
-                ])
-          : null,
+      bottomNavigationBar:
+          getDeviceType(MediaQuery.of(context)) == DeviceType.mobile
+              ? BottomNavigationBar(
+                  currentIndex: selectedIndex,
+                  unselectedItemColor: Colors.green,
+                  selectedItemColor: Colors.blue,
+                  onTap: changeDestination,
+                  items: const [
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.home), label: 'Home'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.history), label: 'History'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.add_box_rounded),
+                          label: 'AddProduct'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.settings), label: 'Settings')
+                    ])
+              : null,
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (MediaQuery.of(context).size.width >= 640)
             NavigationRail(
-              selectedIconTheme: IconThemeData(color: kMainColor),
+              selectedIconTheme: const IconThemeData(color: kMainColor),
               backgroundColor: kMainColor,
-              unselectedIconTheme: IconThemeData(color: Colors.white),
+              unselectedIconTheme: const IconThemeData(color: Colors.white),
               indicatorColor: Colors.white,
               onDestinationSelected: changeDestination,
               selectedIndex: selectedIndex,
