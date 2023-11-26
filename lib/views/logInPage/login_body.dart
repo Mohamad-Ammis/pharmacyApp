@@ -49,7 +49,7 @@ class LogInBody extends StatelessWidget {
                 mainAxisAlignment:MainAxisAlignment.center,
                 children:[ 
                   LogInInfo(),
-                  if(getDeviceType(MediaQuery.of(context))!=DeviceType.mobile)LogInStyle(),
+                  if(getDeviceType(MediaQuery.of(context))!=DeviceType.mobile)const LogInStyle(),
                 ],
               ),
               if(getDeviceType(MediaQuery.of(context)) == DeviceType.desktop)

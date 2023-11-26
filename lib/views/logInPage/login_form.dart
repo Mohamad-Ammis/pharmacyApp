@@ -4,7 +4,6 @@ import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/controller/login_controller.dart';
 import 'package:pharmacy/core/enums/device_type.dart';
 import 'package:pharmacy/helper/get_device_type.dart';
-import 'package:pharmacy/helper/show_dialog.dart';
 import 'package:pharmacy/widgets/custom_button.dart';
 import 'package:pharmacy/widgets/custom_text_field.dart';
 
@@ -14,6 +13,7 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BuildContext con=context;
+    controller.con=context;
     return  GetBuilder<LoginController>(
               init: LoginController(),
               builder: (context) {
@@ -34,19 +34,50 @@ class LoginForm extends StatelessWidget {
                         height: 30,
                       ),
                       CustomTextField(
-                        label: 'Email',
-                        onSaved: (data) {
-                          controller.email = data;
-                        },
-                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (data) {
+                    controller.phone = data;
+                  },
+                  validator:(data){
+                    if(data!.isEmpty){
+                      return 'Required Field';
+                    }
+                    else if (int.tryParse(data) == null) {
+                      return 'Only Numbers Are Allowed';
+                    }
+                    else if (data.length != 10) {
+                      return "Phone Number Must be 10 digits";
+                    }
+                    else{return null;}
+                  } ,
+                        label: 'phone',
+                        keyboardType: TextInputType.number,
                         prefixIcon: const Icon(
-                          Icons.email,
+                          Icons.phone,
                           color: kMainColor,
                         ),
                         filled: true,
                         filledColor: const Color(0xffEBEBEB),
                       ),
-                      const CustomTextField(
+                        CustomTextField(
+                          validator:(data){
+                            if(data!.isEmpty){
+                              return "Required Field";
+                            }
+                            else if(data.length<8){
+                              return "Password Must be At Least 8 Characters";
+                            }
+                            else if (RegExp(r'^-?[0-9]+$').hasMatch(data)) {
+                              return 'Password Should Contain Numbers & Characters';
+                            }
+                            else if(RegExp(r'^[a-z]+$').hasMatch(data)){
+                              return 'Password Should Contain Numbers & Characters';
+                            }
+                            else
+                            return null;
+                          },
+                        onChanged: (data){
+                          controller.password=data;
+                        },
                         label: 'Password',
                         isPassword: true,
                         prefixIcon: Icon(
@@ -68,11 +99,9 @@ class LoginForm extends StatelessWidget {
                         isLoading: false,
                         onTap: () async {
                           if (controller.validateInput()) {
-                            showSuccessDialog(
-                                con, 'Login Success', "Welcome To Our World");
-                            await Future.delayed(const Duration(seconds: 3));
-                            Get.offAllNamed('/HomePage');
-                          } else {}
+                            controller.login(controller.phone.toString(),controller.password.toString());
+                          } else {
+                          }
                         },
                       ),
                     ],
