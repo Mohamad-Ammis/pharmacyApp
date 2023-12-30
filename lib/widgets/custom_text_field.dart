@@ -5,7 +5,7 @@ import 'package:pharmacy/controller/login_controller.dart';
 import 'package:pharmacy/helper/build_border.dart';
 
 class CustomTextField extends StatelessWidget {
-   const CustomTextField(
+  const CustomTextField(
       {super.key,
       this.isPassword,
       this.keyboardType,

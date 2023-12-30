@@ -49,7 +49,7 @@ class LoginController extends GetxController {
   Future<void> login(String phone,String password) async {
     try {
       http.Response response = await http.post(
-        Uri.parse('${kBaseUrl}/v1/login'),
+        Uri.parse('$kBaseUrl/v1/login'),
         headers: <String, String>{
           'Content-Type': kContentApiType,
         },

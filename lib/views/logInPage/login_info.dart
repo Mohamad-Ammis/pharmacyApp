@@ -14,10 +14,12 @@ class LogInInfo extends StatelessWidget {
     return Expanded(
       flex: 2,
       child: Container(
+
         clipBehavior: Clip.hardEdge,
         decoration: const BoxDecoration(
+          color:Colors.white,
           image: DecorationImage(
-            opacity: 0.3,
+            opacity: 0.7,
             fit: BoxFit.cover,
             image: NetworkImage(
               'assets/assets/images/bills.jpg',

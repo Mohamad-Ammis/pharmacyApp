@@ -7,17 +7,20 @@ class CustomButton extends StatelessWidget {
       this.color,
       required this.buttonText,
       this.onTap,
-      required this.isLoading});
+      required this.isLoading, this.width, this.textColor});
   final String buttonText;
   final void Function()? onTap;
   final bool isLoading;
   final Color? color;
+  final Color? textColor;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         height: 60,
+        width: width??200,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: color,
@@ -36,8 +39,8 @@ class CustomButton extends StatelessWidget {
                 )
               : Text(
                   buttonText,
-                  style:  const TextStyle(
-                      color: Colors.white,
+                  style:   TextStyle(
+                      color: textColor??Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold),
                 ),

@@ -1,96 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy/constans.dart';
-import 'package:pharmacy/core/enums/device_type.dart';
-import 'package:pharmacy/helper/get_device_type.dart';
-import 'package:pharmacy/views/addproduct/add_product.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pharmacy/views/NavBar/navbar_item.dart';
+import 'package:pharmacy/views/products_list_page/products_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
+int selectedsa = 0;
+List<bool> selected = [true, false, false, false, false];
+List pages = [
+  const Expanded(child: ProductsPage()),
+  Expanded(
+      child: Container(
+    color: Colors.red,
+  )),
+  Expanded(
+      child: Container(
+    color: Colors.white,
+  )),
+  Expanded(
+      child: Container(
+    color: Colors.green,
+  )),
+  Expanded(
+      child: Container(
+    color: Colors.black,
+  )),
+];
 class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
-  bool isExpanded = false;
+  List<IconData> icon = [
+    FontAwesomeIcons.house,
+    FontAwesomeIcons.plus,
+    FontAwesomeIcons.boxOpen,
+    // Icons.abc_sharp,
+    // Icons.deblur
+  ];
 
+  void select(int n) {
+    for (int i = 0; i < 5; i++) {
+      if (i == n) {
+        selected[i] = true;
+      } else {
+        selected[i] = false;
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = [
-      Expanded(
-        child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.amber.shade100,
-            child:const  Center(child: Text('One'))),
-      ),
-      Expanded(
-        child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.pink.shade100,
-            child: const Center(child: Text('Two'))),
-      ),
-      AddProduct(),
-      Expanded(
-        child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.green.shade100,
-            child: const Center(child: Text('four'))),
-      ),
-    ];
-    return Scaffold(
-      bottomNavigationBar:
-          getDeviceType(MediaQuery.of(context)) == DeviceType.mobile
-              ? BottomNavigationBar(
-                  currentIndex: selectedIndex,
-                  unselectedItemColor: Colors.green,
-                  selectedItemColor: Colors.blue,
-                  onTap: changeDestination,
-                  items: const [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: 'Home'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.history), label: 'History'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.add_box_rounded),
-                          label: 'AddProduct'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.settings), label: 'Settings')
-                    ])
-              : null,
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (MediaQuery.of(context).size.width >= 640)
-            NavigationRail(
-              selectedIconTheme: const IconThemeData(color: kMainColor),
-              backgroundColor: kMainColor,
-              unselectedIconTheme: const IconThemeData(color: Colors.white),
-              indicatorColor: Colors.white,
-              onDestinationSelected: changeDestination,
-              selectedIndex: selectedIndex,
-              destinations: const [
-                NavigationRailDestination(
-                    icon: Icon(Icons.home), label: Text('Home')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.history), label: Text('History')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.add_box_rounded),
-                    label: Text('Add Product')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.settings), label: Text('Settings'))
-              ],
+   return Scaffold(
+      body: Row(children: [
+        Stack(
+          children: [
+            Container(
+              color: Colors.white,
             ),
-          screens[selectedIndex],
-        ],
-      ),
+            Container(
+              //margin: EdgeInsets.all(8.0),
+              height: MediaQuery.of(context).size.height,
+              width: 101.0,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 0, 0),
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 200,
+                    child: Column(
+                      children: icon
+                          .map(
+                            (e) => NavBarItem(
+                              icon: e,
+                              selected: selected[icon.indexOf(e)],
+                              onTap: () {
+                                setState(() {
+                                  select(icon.indexOf(e));
+                                  selectedsa = icon.indexOf(e);
+                                });
+                              },
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        pages[selectedsa]
+      ]),
     );
-  }
-
-  void Function(int)? changeDestination(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-    return null;
   }
 }
