@@ -4,6 +4,7 @@ import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/controller/homepage/get_all_products.dart';
 import 'package:pharmacy/models/product.dart';
 import 'package:pharmacy/views/products_list_page/productcard.dart';
+import 'package:pharmacy/views/viewall/view_all_page.dart';
 
 class ProductList extends StatelessWidget {
   ProductList({
@@ -27,6 +28,7 @@ class ProductList extends StatelessWidget {
                   height: 60,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         type,
@@ -35,7 +37,11 @@ class ProductList extends StatelessWidget {
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                       ),
-                      //Text('View All'),
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(ViewAllPage(products: products,title: type,));
+                        },
+                        child: Text('View All')),
                     ],
                   ),
                 ),

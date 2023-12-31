@@ -101,7 +101,7 @@ class LoginForm extends StatelessWidget {
                         onTap: () async {
                           if (controller.validateInput()) {
                             controller.login(controller.phone.toString(),controller.password.toString());
-                            shared.setString('id', 'admin');
+                            shared.setString('role', 'admin');
                           } else {
                           }
                         },
