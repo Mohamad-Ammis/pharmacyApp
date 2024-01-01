@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:pharmacy/views/HomePage/homepage.dart';
 import 'package:pharmacy/views/logInPage/loginpage.dart';
 import 'package:pharmacy/views/showProductPage/show_product_page.dart';
-import 'package:pharmacy/views/viewall/view_all_page.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences shared;
@@ -13,7 +13,7 @@ void main() async{
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: shared.getString('role')=='admin'?'/HomePage':'/LogInPage',
+      initialRoute: shared.getString('role')=='admin'?'/HomePage':'/HomePage',
       getPages: [
         GetPage(name: '/ShowProduct', page: () => const ShowProductPage()),
         GetPage(name: '/LogInPage', page: () => const LogInPage(),),

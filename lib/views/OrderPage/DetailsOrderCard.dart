@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:pharmacy/models/product.dart';
 import 'package:pharmacy/views/showProductPage/show_product_page.dart';
 
-class DetailsOrderCard extends StatelessWidget {
-  const DetailsOrderCard({super.key, required this.product, required this.haveQuantity});
+class DetailsOrderCardApi extends StatelessWidget {
+  const DetailsOrderCardApi({super.key, required this.product, required this.haveQuantity});
   final Product product;
   final bool haveQuantity;
   @override

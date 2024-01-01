@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pharmacy/views/NavBar/navbar_item.dart';
+import 'package:pharmacy/views/addproductPage/add_product_body.dart';
+import 'package:pharmacy/views/orderpage/allOrdersPage.dart';
 import 'package:pharmacy/views/products_list_page/products_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,10 +14,9 @@ int selectedsa = 0;
 List<bool> selected = [true, false, false, false, false];
 List pages = [
   const Expanded(child: ProductsPage()),
-  Expanded(
-      child: Container(
-    color: Colors.red,
-  )),
+  
+      AddProductBody(),
+      AllOrderPage(),
   Expanded(
       child: Container(
     color: Colors.white,
