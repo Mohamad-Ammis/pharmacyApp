@@ -43,6 +43,7 @@ class _CateFieldState extends State<CateField> {
         setState(() {
           ValueChoose = newValue!;
           category=newValue.toString();
+          categoryId=(listCategory.indexOf(category!)+1).toString();
         });
       },
       value: ValueChoose,

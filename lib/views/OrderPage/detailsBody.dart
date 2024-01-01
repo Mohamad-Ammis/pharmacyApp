@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy/views/orderpage/detailsOrderItem.dart';
+import 'package:pharmacy/models/product.dart';
+import 'package:pharmacy/views/orderpage/DetailsOrderCard.dart';
 
 class DetailsOrderBody extends StatelessWidget {
-  const DetailsOrderBody({super.key});
-
+  const DetailsOrderBody({super.key,required this.orderData, required this.i});
+  final orderData;
+  final int i;
   @override
   Widget build(BuildContext context) {
+    dynamic prod=orderData['products'];
+    print(prod);
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -54,7 +58,14 @@ class DetailsOrderBody extends StatelessWidget {
                       child: Row(children: [Text("Order Details (6)")]),
                     ),
                     Expanded(
-                      child: DetailsOrderItem(),
+                      child: GridView.builder(
+             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              childAspectRatio: 0.8),
+                itemCount: prod.length,
+            itemBuilder: (context,index){
+              return DetailsOrderCardApi(product: Product.fromJsonOrder(prod[index]), haveQuantity: true,);
+            }),
                     ),
                     // Expanded(
                     //   child: GridView.builder(

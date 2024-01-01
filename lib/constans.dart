@@ -8,4 +8,4 @@ const kBorderColor= Color(0xffCED3E4);
 TextStyle kMainFont=GoogleFonts.notoSerif();
 const String kBaseUrl='http://127.0.0.1:8000/api';
 const String kContentApiType='application/json; charset=UTF-8';
-const String kTokenTest='mZsh0ygh3TeDdml3VcNjcrvyIoQA7U3JJfnUfWsB908460b1';
+const String kTokenTest='2WkfIdQUQZpw6hVbnmj9SCA4WllSy4RowYh8zK3Fc6aa3eda';

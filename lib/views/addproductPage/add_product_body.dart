@@ -1,7 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
+import 'dart:convert';
+import 'dart:html' as html;
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,8 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pharmacy/widgets/custom_text_field.dart';
 
 final formkey = GlobalKey<FormState>();
-  String? category;
-  File? image;
+String? category;
+String? categoryId;
+//File? image;
 
 class AddProductBody extends StatefulWidget {
   AddProductBody({super.key});
@@ -34,11 +35,32 @@ class _AddProductBodyState extends State<AddProductBody> {
   String? exDate;
   String? desc;
   String? descAr;
-DateTime? ExpirationDate=DateTime.now();
-DateTime expirDate = DateTime.now();
+  DateTime? ExpirationDate;
+  DateTime expirDate = DateTime.now();
   final controller = Get.put(AddProductController());
-
   TextEditingController date = TextEditingController();
+  List<int>? _selectedfile;
+  Uint8List? _bytesdata;
+  fetchimage() async {
+    html.FileUploadInputElement uploadinput = html.FileUploadInputElement();
+    uploadinput.multiple = true;
+    uploadinput.draggable = true;
+    uploadinput.click();
+
+    uploadinput.onChange.listen((event) {
+      final files = uploadinput.files;
+      final file = files![0];
+      final reader = html.FileReader();
+      reader.onLoadEnd.listen((event) {
+        setState(() {
+          _bytesdata =
+              Base64Decoder().convert(reader.result.toString().split(",").last);
+          _selectedfile = _bytesdata;
+        });
+      });
+      reader.readAsDataUrl(file);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,23 +244,26 @@ DateTime expirDate = DateTime.now();
                                       padding: const EdgeInsets.only(bottom: 0),
                                       child: MaterialButton(
                                           onPressed: () {
+                                            setState(() {
+                                              
+                                            });
                                             showDatePicker(
                                                     context: context,
                                                     firstDate: DateTime.now(),
                                                     lastDate: DateTime(2050),
-                                                    initialDate: DateTime.now())
+                                                    initialDate: ExpirationDate??DateTime.now())
                                                 .then((value) {
-                                              ExpirationDate =
-                                                  value ?? DateTime.now();
                                               setState(() {
+                                              ExpirationDate =value;
                                                 print(ExpirationDate);
                                               });
                                             });
                                           },
                                           child: Text(
-                                            expirDate
+                                            ExpirationDate==null?DateTime.now()
                                                 .toString()
-                                                .substring(0, 10),
+                                                .substring(0, 10):ExpirationDate.toString()
+                                                    .substring(0, 10),
                                           )),
                                     ),
                                   ),
@@ -248,7 +273,7 @@ DateTime expirDate = DateTime.now();
                                   Container(
                                     width: 100,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         stock = data;
                                       },
                                       validator: (value) {
@@ -272,7 +297,7 @@ DateTime expirDate = DateTime.now();
                                   Container(
                                     width: 100,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         price = data;
                                       },
                                       validator: (value) {
@@ -308,7 +333,7 @@ DateTime expirDate = DateTime.now();
                                     width: 400,
                                     height: 100,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         desc = data;
                                       },
                                       validator: (value) {
@@ -350,7 +375,7 @@ DateTime expirDate = DateTime.now();
                                   Container(
                                     width: 400,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         scNameAr = data;
                                       },
                                       validator: (data) {
@@ -379,7 +404,7 @@ DateTime expirDate = DateTime.now();
                                   Container(
                                     width: 400,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         brandNameAr = data;
                                       },
                                       validator: (data) {
@@ -408,7 +433,7 @@ DateTime expirDate = DateTime.now();
                                   Container(
                                     width: 400,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         manufacturerAr = data;
                                       },
                                       validator: (data) {
@@ -438,7 +463,7 @@ DateTime expirDate = DateTime.now();
                                     width: 400,
                                     height: 100,
                                     child: CustomTextField(
-                                       onChanged: (data) {
+                                      onChanged: (data) {
                                         descAr = data;
                                       },
                                       validator: (value) {
@@ -492,135 +517,136 @@ DateTime expirDate = DateTime.now();
                                         ),
                                       )),
                                   GetBuilder<AddProductController>(
-                                    builder: (controller) =>
-                                        controller.selectedImagePath == ''
-                                            ? Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, left: 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                    builder: (controller) => _bytesdata == null
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
                                                   children: [
-                                                    Column(
-                                                      children: [
-                                                        DottedBorder(
-                                                          color: kMainColor,
-                                                          strokeWidth: 2,
-                                                          borderType:
-                                                              BorderType.RRect,
-                                                          dashPattern: const <double>[
-                                                            5,
-                                                            2.5
-                                                          ],
-                                                          radius: const Radius
-                                                              .circular(20),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              controller.getImage(
-                                                                  ImageSource
-                                                                      .gallery);
-                                                            },
-                                                            child: Container(
-                                                              height: 250,
-                                                              width: 350,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Color(
-                                                                    0xfff5f6fa),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
+                                                    DottedBorder(
+                                                      color: kMainColor,
+                                                      strokeWidth: 2,
+                                                      borderType:
+                                                          BorderType.RRect,
+                                                      dashPattern: const <double>[
+                                                        5,
+                                                        2.5
+                                                      ],
+                                                      radius:
+                                                          const Radius.circular(
+                                                              20),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          //   controller.getImage(
+                                                          //       ImageSource
+                                                          //           .gallery);
+                                                          fetchimage();
+                                                        },
+                                                        child: Container(
+                                                          height: 250,
+                                                          width: 350,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xfff5f6fa),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                          ),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Spacer(),
+                                                              Image.asset(
+                                                                'assets/images/43.jpg',
+                                                                height: 100,
+                                                                width: 100,
+                                                                opacity:
+                                                                    const AlwaysStoppedAnimation(
+                                                                        0.06),
                                                               ),
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Spacer(),
-                                                                  Image.asset(
-                                                                    'assets/images/43.jpg',
-                                                                    height: 100,
-                                                                    width: 100,
-                                                                    opacity:
-                                                                        const AlwaysStoppedAnimation(
-                                                                            0.06),
-                                                                  ),
-                                                                  Spacer(),
-                                                                  Padding(
-                                                                    padding: const EdgeInsets
+                                                              Spacer(),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
                                                                         .only(
                                                                         bottom:
                                                                             40),
-                                                                    child:
-                                                                        Expanded(
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          InkWell(
-                                                                            onTap:
-                                                                                () {
-                                                                              controller.getImage(ImageSource.gallery);
-                                                                            },
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.file_upload_outlined,
-                                                                              size: 30,
-                                                                              color: kMainColor,
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.only(left: 8.0),
-                                                                            child:
-                                                                                Text("Select image from gallery"),
-                                                                          )
-                                                                        ],
+                                                                child: Expanded(
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          // controller.getImage(ImageSource.gallery);
+                                                                          fetchimage();
+                                                                        },
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .file_upload_outlined,
+                                                                          size:
+                                                                              30,
+                                                                          color:
+                                                                              kMainColor,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            left:
+                                                                                8.0),
+                                                                        child: Text(
+                                                                            "Select image from gallery"),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Column(
-                                                children: [
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 16, right: 0),
-                                                    height: 270,
-                                                    width: 350,
-                                                    decoration: BoxDecoration(),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              1.2),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(14),
-                                                        child: Image.network(
-                                                          controller
-                                                              .selectedImagePath,
-                                                          fit: BoxFit.fill,
-                                                          filterQuality:
-                                                              FilterQuality
-                                                                  .high,
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 16, right: 0),
+                                                height: 270,
+                                                width: 350,
+                                                decoration: BoxDecoration(),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(1.2),
+                                                  child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              14),
+                                                      child: Image.memory(
+                                                        _bytesdata!,
+                                                        fit: BoxFit.fitHeight,
+                                                      )),
+                                                ),
                                               ),
+                                            ],
+                                          ),
                                   ),
                                   Spacer(),
                                   Padding(
@@ -634,15 +660,27 @@ DateTime expirDate = DateTime.now();
                                               MainAxisAlignment.end,
                                           children: [
                                             InkWell(
-                                              onTap: () async{
+                                              onTap: () async {
                                                 if (formkey.currentState!
                                                         .validate() &&
-                                                    controller
-                                                            .selectedImagePath !=
-                                                        '') {
-                                                          print('before');
-                                                  await controller.addProduct(scName!, scNameAr!, brandName!, brandNameAr!, manufacturer!, manufacturerAr!, price!, stock!, ExpirationDate.toString().substring(0,10), desc!, descAr!, image!);
-                                                          print('after');
+                                                    _selectedfile!=null
+                                                  ) {
+                                                  print('before');
+                                                  await controller.addProduct(
+                                                      scName!,
+                                                      scNameAr!,
+                                                      brandName!,
+                                                      brandNameAr!,
+                                                      manufacturer!,
+                                                      manufacturerAr!,
+                                                      price!,
+                                                      stock!,
+                                                      ExpirationDate.toString()
+                                                          .substring(0, 10),
+                                                      desc!,
+                                                      descAr!,
+                                                      _selectedfile!);
+                                                  print('after');
                                                   //Get.toNamed('/login');
                                                 }
                                               },

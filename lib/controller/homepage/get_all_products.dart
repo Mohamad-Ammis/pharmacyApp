@@ -30,6 +30,7 @@ class GetAllProducts extends GetxController {
         return jsonDecode(response.body);
       } else {
         //print("Error When Get All Products");
+        print(response.body);
         throw Exception('Error When Get All Products');
       }
     } on Exception catch (e) {

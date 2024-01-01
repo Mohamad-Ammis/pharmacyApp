@@ -1,24 +1,29 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy/constans.dart';
+import 'package:pharmacy/controller/orderpage/change_order_state.dart';
+import 'package:pharmacy/controller/orderpage/getallOrders.dart';
 import 'package:pharmacy/views/orderpage/detailsBody.dart';
 import 'package:pharmacy/views/orderpage/dividerr.dart';
 
 class OrderCard extends StatefulWidget {
   OrderCard({
     super.key,
+    required this.Orderdata,
+    required this .paid,
+    required this .Status, required this.index
   });
-
   @override
+  String paid;
+    String Status;
+  final dynamic Orderdata;
+  final int index;
   State<OrderCard> createState() => _OrderCardState();
 }
 
 class _OrderCardState extends State<OrderCard> {
   bool submit = false;
   bool onPress = false;
-  String paid = 'Unpaid';
-  String Status = 'Preparing';
   String apiStatus = 'Preparing';
   String apiPayment = 'Unpaid';
   @override
@@ -36,28 +41,40 @@ class _OrderCardState extends State<OrderCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(width: 12),
-                    Container(width: 150, child: Text("Ahmad")),
+                    Container(
+                        width: 150,
+                        child:
+                            Text(widget.Orderdata['user']['name'].toString())),
                     SizedBox(width: 80),
-                    Container(width: 150, child: Text("4332")),
+                    Container(
+                        width: 150,
+                        child: Text(widget.Orderdata['id'].toString())),
                     SizedBox(width: 60),
-                    Container(width: 150, child: Text("\$7890}")),
+                    Container(
+                        width: 150,
+                        child:
+                            Text(widget.Orderdata['bill']['total'].toString())),
                     SizedBox(width: 25),
-                    Container(width: 130, child: Text("28/1/2024")),
+                    Container(
+                        width: 130,
+                        child: Text(widget.Orderdata['created_at']
+                            .toString()
+                            .substring(0, 10))),
                     SizedBox(width: 10),
                     Container(
                         width: 135,
                         child: Container(
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async{
                               setState(() {
-                                if (Status == 'Preparing') {
-                                  Status = 'Sent';
-                                  apiStatus = 'Sent';
+                                if (widget.Status == 'pending') {
+                                  widget.Status = 'sent';
+                                  apiStatus = 'sent';
                                   submit = true;
-                                } else if (Status == 'Sent' &&
+                                } else if (widget.Status == 'sent' &&
                                     submit == false) {
-                                  Status = 'Received';
-                                  apiStatus = 'Received';
+                                  widget.Status = 'received';
+                                  apiStatus = 'received';
                                   submit = true;
                                 }
                               });
@@ -66,39 +83,12 @@ class _OrderCardState extends State<OrderCard> {
                               padding: EdgeInsets.symmetric(vertical: 8),
                               child: Row(
                                 children: [
-                                  Text(Status),
+                                  Text(widget.Status),
                                   Icon(Icons.arrow_drop_down),
                                 ],
                               ),
                             ),
                           ),
-                          // DropdownButton(
-                          //   dropdownColor: Color.fromARGB(255, 221, 208, 249),
-                          //   focusColor: Color.fromRGBO(255, 255, 255, 0.5),
-                          //   elevation: 0,
-                          //   // icon: Visibility(
-                          //   //     visible: true,
-                          //   //     child: Icon(Icons.arrow_downward)),
-                          //   underline: SizedBox(),
-                          //   borderRadius: BorderRadius.circular(8),
-                          //   value: stateChoose,
-                          //   onChanged: (newValue) {
-                          //     setState(() {
-                          //       stateChoose = newValue as String;
-
-                          //       submit = true;
-                          //     });
-                          //   },
-                          //   items: listState.map((valueItem) {
-                          //     return DropdownMenuItem(
-                          //       value: valueItem,
-                          //       child: Padding(
-                          //         padding: const EdgeInsets.only(left: 10),
-                          //         child: Text(valueItem),
-                          //       ),
-                          //     );
-                          //   }).toList(),
-                          // ),
                         )),
                     SizedBox(width: 28),
                     Container(
@@ -106,9 +96,15 @@ class _OrderCardState extends State<OrderCard> {
                         child: Container(
                             child: InkWell(
                           onTap: () {
+                              if (widget.paid == 'Unpaid') {
+                              
+                                ChangeOrderState().payOrder(kTokenTest,
+                                  widget.Orderdata['id'].toString());
+                              
+                              }
                             setState(() {
-                              if (paid == 'Unpaid') {
-                                paid = 'Paid';
+                              if (widget.paid == 'Unpaid') {
+                                widget.paid = 'Paid';
                                 apiPayment = 'Paid';
                                 // submit = true;
                               }
@@ -119,9 +115,9 @@ class _OrderCardState extends State<OrderCard> {
                             child: Row(
                               children: [
                                 Text(
-                                  paid,
+                                  widget.paid,
                                   style: TextStyle(
-                                      color: paid == 'Unpaid'
+                                      color: widget.paid == 'Unpaid'
                                           ? Colors.red
                                           : Colors.green),
                                 ),
@@ -129,15 +125,13 @@ class _OrderCardState extends State<OrderCard> {
                               ],
                             ),
                           ),
-                        )
-                           
-                            )),
+                        ))),
                     SizedBox(width: 20),
                     Container(
                       child: !submit
                           ? InkWell(
                               onTap: () {
-                                Get.to(DetailsOrderBody());
+                                Get.to(DetailsOrderBody(orderData:widget.Orderdata,i: widget.index,));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -155,7 +149,13 @@ class _OrderCardState extends State<OrderCard> {
                               ),
                             )
                           : InkWell(
-                              onTap: () {
+                              onTap: () async{
+                                if(apiStatus=='sent'){
+                                  await  ChangeOrderState().sendOrder(kTokenTest, widget.Orderdata['id'].toString());
+                                }
+                                else if(apiStatus=='received'){
+                                  await  ChangeOrderState().receivedOrder(kTokenTest, widget.Orderdata['id'].toString());
+                                }
                                 setState(() {
                                   submit = !submit;
                                   print("${apiPayment}\n ${apiStatus}");

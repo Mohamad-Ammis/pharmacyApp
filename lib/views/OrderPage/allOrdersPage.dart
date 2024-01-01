@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constans.dart';
+import 'package:pharmacy/controller/orderpage/getallOrders.dart';
 import 'package:pharmacy/views/orderpage/OrderCard.dart';
 
 class AllOrderPage extends StatefulWidget {
@@ -10,7 +11,6 @@ class AllOrderPage extends StatefulWidget {
 }
 
 class _AllOrderPageState extends State<AllOrderPage> {
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -39,9 +39,7 @@ class _AllOrderPageState extends State<AllOrderPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
-                    child: Container(
-                      
-                    ),
+                    child: Container(),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -71,13 +69,36 @@ class _AllOrderPageState extends State<AllOrderPage> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      child: Expanded(child: OrderCard()),
-                    ),
-                  ),
-                 
+                  FutureBuilder(
+                      future: GetAllOrders().getAllOrders(kTokenTest),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          dynamic data = snapshot.data['orders'];
+                          return Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              child: Expanded(
+                                  child: ListView.builder(
+                                      itemCount: data.length,
+                                      itemBuilder: (context, index) {
+                                        return OrderCard(
+                                          Orderdata: data[index],
+                                          paid: data[index]['bill']['paid']
+                                                      .toString() ==
+                                                  '0'
+                                              ? "Unpaid"
+                                              : "Paid",
+                                          Status: data[index]['status'], index: index,
+                                        );
+                                      })),
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      })
                 ],
               ),
             ),
