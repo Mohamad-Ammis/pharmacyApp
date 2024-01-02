@@ -6,6 +6,7 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ProductsPageBody());
+    return Scaffold(body: ProductsPageBody(),
+    );
   }
 }

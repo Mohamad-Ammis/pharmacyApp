@@ -40,9 +40,8 @@ class _NavBarItemState extends State<NavBarItem> with TickerProviderStateMixin {
     _anim1 = Tween(begin: 101.0, end: 55.0).animate(_controller1);
     _anim2 = Tween(begin: 101.0, end: 5.0).animate(_controller2);
     _anim3 = Tween(begin: 101.0, end: 30.0).animate(_controller2);
-    _color =
-        ColorTween(end: Color.fromARGB(255, 2, 2, 2), begin: Colors.white)
-            .animate(_controller2);
+    _color = ColorTween(end: Color.fromARGB(255, 2, 2, 2), begin: Colors.white)
+        .animate(_controller2);
 
     _controller1.addListener(() {
       setState(() {});

@@ -35,10 +35,15 @@ class DetailsOrderCardApi extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
-            child: Image.asset(
-              'assets/images/43.jpg',
-              fit: BoxFit.fill,
-            ),
+            child: product.image != null
+                ? Image.network(
+                    'http://localhost:8000/storage/${product.image}',
+                    fit: BoxFit.fill,
+                  )
+                : Image.asset(
+                    'assets/images/43.jpg',
+                    fit: BoxFit.fill,
+                  ),
           ),
           //info
           Container(

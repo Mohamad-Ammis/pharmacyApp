@@ -10,13 +10,13 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 int selectedsa = 0;
 List<bool> selected = [true, false, false, false, false];
 List pages = [
   const Expanded(child: ProductsPage()),
-  
-      AddProductBody(),
-      AllOrderPage(),
+  AddProductBody(),
+  AllOrderPage(),
   Expanded(
       child: Container(
     color: Colors.white,
@@ -30,6 +30,7 @@ List pages = [
     color: Colors.black,
   )),
 ];
+
 class _HomePageState extends State<HomePage> {
   List<IconData> icon = [
     FontAwesomeIcons.house,
@@ -48,9 +49,10 @@ class _HomePageState extends State<HomePage> {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       body: Row(children: [
         Stack(
           children: [

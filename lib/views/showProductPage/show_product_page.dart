@@ -49,10 +49,15 @@ class _ShowProductPageState extends State<ShowProductPage> {
                       bottomLeft: Radius.circular(10))),
               width: 450,
               height: 450,
-              child: Image.asset(
-                'assets/images/43.jpg',
-                fit: BoxFit.fill,
-              ),
+              child: product.image != null
+                  ? Image.network(
+                      'http://localhost:8000/storage/${product.image}',
+                      fit: BoxFit.fill,
+                    )
+                  : Image.asset(
+                      'assets/images/43.jpg',
+                      fit: BoxFit.fill,
+                    ),
             ),
             Container(
               width: 400,

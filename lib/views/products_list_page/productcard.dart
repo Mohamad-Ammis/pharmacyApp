@@ -4,7 +4,8 @@ import 'package:pharmacy/models/product.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
-    super.key, required this.product,
+    super.key,
+    required this.product,
   });
   final Product product;
   @override
@@ -35,10 +36,12 @@ class ProductCard extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.7))
             ]),
             clipBehavior: Clip.hardEdge,
-            child: Image.asset(
-              'assets/images/43.jpg',
+            child:product.image!=null? Image.network(
+              'http://localhost:8000/storage/${product.image}',
               fit: BoxFit.fill,
-            ),
+            ):Image.asset('assets/images/43.jpg',
+                    fit: BoxFit.fill,
+                  ),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -81,11 +84,11 @@ class ProductCard extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                          color:Colors.black,
+                          color: Colors.black,
                           borderRadius: BorderRadius.circular(100)),
                       child: GestureDetector(
-                        onTap:(){ 
-                          Get.toNamed('/ShowProduct',arguments: product);
+                        onTap: () {
+                          Get.toNamed('/ShowProduct', arguments: product);
                         },
                         child: Icon(
                           Icons.arrow_forward_sharp,
@@ -93,7 +96,6 @@ class ProductCard extends StatelessWidget {
                           size: 20,
                         ),
                       ),
-                      
                     )
                   ],
                 )
