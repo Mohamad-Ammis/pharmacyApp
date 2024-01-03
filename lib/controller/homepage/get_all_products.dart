@@ -7,7 +7,7 @@ class GetAllProducts extends GetxController {
   dynamic data;
   dynamic categoryData;
   Map<int, bool> favoriteProducts = {};
-
+List<dynamic>? products;
   Future<dynamic> getByCategory(String token, String category) async {
     dynamic response = await http.get(
         Uri.parse(
@@ -22,11 +22,10 @@ class GetAllProducts extends GetxController {
     try {
       http.Response response = await http.get(
           Uri.parse('$kBaseUrl/v1/products'),
-          headers: {"Authorization": "Bearer $token"});
+          headers: {"Authorization": "Bearer $token",'Accept':'application/json'});
       if (response.statusCode == 200) {
         data = jsonDecode(response.body);
         print('Get All Products Successfully');
-        update();
         return jsonDecode(response.body);
       } else {
         //print("Error When Get All Products");

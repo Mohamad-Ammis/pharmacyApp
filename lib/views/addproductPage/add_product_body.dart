@@ -565,14 +565,14 @@ class _AddProductBodyState extends State<AddProductBody> {
                                                                     .end,
                                                             children: [
                                                               Spacer(),
-                                                              Image.asset(
-                                                                'assets/images/43.jpg',
-                                                                height: 100,
-                                                                width: 100,
-                                                                opacity:
-                                                                    const AlwaysStoppedAnimation(
-                                                                        0.06),
-                                                              ),
+                                                              // Image.asset(
+                                                              //   'assets/images/photo_2024-01-03_13-32-54.jpg',
+                                                              //   height: 100,
+                                                              //   width: 100,
+                                                              //   opacity:
+                                                              //       const AlwaysStoppedAnimation(
+                                                              //           0.5),
+                                                              // ),
                                                               Spacer(),
                                                               Padding(
                                                                 padding:
@@ -680,8 +680,8 @@ class _AddProductBodyState extends State<AddProductBody> {
                                                       desc!,
                                                       descAr!,
                                                       _selectedfile!);
-                                                  print('after');
-                                                  //Get.toNamed('/login');
+                                                  print('after addprod');
+                                                  Get.toNamed('/HomePage');
                                                 }
                                               },
                                               child: Container(

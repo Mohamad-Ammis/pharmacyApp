@@ -64,7 +64,7 @@ class DetailsOrderBody extends StatelessWidget {
               childAspectRatio: 0.8),
                 itemCount: prod.length,
             itemBuilder: (context,index){
-              return DetailsOrderCardApi(product: Product.fromJsonOrder(prod[index]), haveQuantity: true,);
+              return DetailsOrderCardApi(product: Product.fromJsonOrder(prod[index]), haveQuantity: true, isOrder: true,);
             }),
                     ),
                     // Expanded(

@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pharmacy/constans.dart';
+import 'package:pharmacy/controller/homepage/delete_prod.dart';
+import 'package:pharmacy/controller/homepage/get_all_products.dart';
 import 'package:pharmacy/models/product.dart';
+import 'package:pharmacy/views/products_list_page/product_list.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     super.key,
     required this.product,
   });
   final Product product;
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  final cont=Get.put(GetAllProducts());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,8 +47,8 @@ class ProductCard extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.7))
             ]),
             clipBehavior: Clip.hardEdge,
-            child:product.image!=null? Image.network(
-              'http://localhost:8000/storage/${product.image}',
+            child:widget.product.image!=null? Image.network(
+              '${kImageUrl}${widget.product.image}',
               fit: BoxFit.fill,
             ):Image.asset('assets/images/43.jpg',
                     fit: BoxFit.fill,
@@ -58,27 +69,43 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      product.brandName!,
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 70,
+                          child: Text(
+                            widget.product.brandName!,
+                            style: TextStyle(
+                                fontSize: 14,
+                                overflow: TextOverflow.ellipsis,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Text(
+                          "Stock = ${widget.product.stock!}",
+                          style: TextStyle(fontSize: 10, color: Colors.black),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "Stock = ${product.stock!}",
-                      style: TextStyle(fontSize: 10, color: Colors.black),
-                    ),
+                    IconButton(onPressed:(
+
+                    )async{
+                     await  DeleteProduct().deleteProduct(kTokenTest, widget.product.id.toString());
+                      cont.products!.remove(widget.product);
+                      cont.update();
+                    },icon: Icon(Icons.delete_forever, color: Colors.red),)
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      r"$" '${product.price!}',
+                      r"$" '${widget.product.price!}',
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     Container(
@@ -88,7 +115,7 @@ class ProductCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(100)),
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed('/ShowProduct', arguments: product);
+                          Get.toNamed('/ShowProduct', arguments: widget.product);
                         },
                         child: Icon(
                           Icons.arrow_forward_sharp,

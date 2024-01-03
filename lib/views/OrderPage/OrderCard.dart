@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/controller/orderpage/change_order_state.dart';
 import 'package:pharmacy/controller/orderpage/getallOrders.dart';
+import 'package:pharmacy/main.dart';
 import 'package:pharmacy/views/orderpage/detailsBody.dart';
 import 'package:pharmacy/views/orderpage/dividerr.dart';
 
@@ -98,7 +99,8 @@ class _OrderCardState extends State<OrderCard> {
                           onTap: () {
                               if (widget.paid == 'Unpaid') {
                               
-                                ChangeOrderState().payOrder(kTokenTest,
+                                ChangeOrderState().payOrder(
+                                  shared.getString('token').toString(),
                                   widget.Orderdata['id'].toString());
                               
                               }
@@ -151,10 +153,10 @@ class _OrderCardState extends State<OrderCard> {
                           : InkWell(
                               onTap: () async{
                                 if(apiStatus=='sent'){
-                                  await  ChangeOrderState().sendOrder(kTokenTest, widget.Orderdata['id'].toString());
+                                  await  ChangeOrderState().sendOrder(shared.getString('token').toString(), widget.Orderdata['id'].toString());
                                 }
                                 else if(apiStatus=='received'){
-                                  await  ChangeOrderState().receivedOrder(kTokenTest, widget.Orderdata['id'].toString());
+                                  await  ChangeOrderState().receivedOrder(shared.getString('token').toString(), widget.Orderdata['id'].toString());
                                 }
                                 setState(() {
                                   submit = !submit;

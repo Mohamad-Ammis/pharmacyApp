@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/helper/api.dart';
 import 'package:pharmacy/helper/show_dialog.dart';
+import 'package:pharmacy/main.dart';
 
 class LoginController extends GetxController {
   BuildContext? con;
@@ -59,7 +60,8 @@ class LoginController extends GetxController {
       if (data['status'] == true) {
         showSuccessDialog(con!, 'Login Success', "Welcome To Our World");
         await Future.delayed(const Duration(seconds: 3));
-        Get.offAllNamed('/HomePage');
+        shared.setString('token', data['token'].toString());
+        Get.offAllNamed("/HomePage");
       } else {
         if(data['errors']==null){
         showErrorDialog(con!, "Error Happened", data['message']);

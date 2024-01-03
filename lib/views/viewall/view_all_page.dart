@@ -23,7 +23,7 @@ class ViewAllPage extends StatelessWidget {
               childAspectRatio: 0.9,),
                 itemCount: products.length,
             itemBuilder: (context,index){
-              return  DetailsOrderCardApi(product: Product.fromJson(products[index]), haveQuantity: false,);
+              return  DetailsOrderCardApi(product: Product.fromJson(products[index]), haveQuantity: false, isOrder: false,);
             }),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pharmacy/constans.dart';
 import 'package:http/http.dart'as http;
+import 'package:pharmacy/main.dart';
 import 'package:pharmacy/views/addproductPage/add_product_body.dart';
 import 'package:file_picker/file_picker.dart';
 class AddProductController extends GetxController {
@@ -28,11 +29,11 @@ class AddProductController extends GetxController {
   )async {
     var headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer $kTokenTest'
+  'Authorization': 'Bearer ${shared.getString('token').toString()}'
 };
 try{
   var request = http.MultipartRequest(
-          'POST', Uri.parse('http://localhost:8000/api/v1/products'));
+          'POST', Uri.parse('${kBaseUrl}/v1/products'));
       request.fields.addAll({
         'scientific_name': scName,
         'scientific_name_ar': scNameAr,

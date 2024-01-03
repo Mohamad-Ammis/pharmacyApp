@@ -5,9 +5,10 @@ import 'package:pharmacy/models/product.dart';
 import 'package:pharmacy/views/showProductPage/show_product_page.dart';
 
 class DetailsOrderCardApi extends StatelessWidget {
-  const DetailsOrderCardApi({super.key, required this.product, required this.haveQuantity});
+  const DetailsOrderCardApi({super.key, required this.product, required this.haveQuantity, required this.isOrder});
   final Product product;
   final bool haveQuantity;
+  final bool isOrder;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -92,7 +93,7 @@ class DetailsOrderCardApi extends StatelessWidget {
                             "Stock = ${product.stock!} ",
                             style: TextStyle(fontSize: 14),
                           ),
-                    Container(
+                    isOrder==false?  Container(
                         width: 30,
                         height: 30,
                         decoration: BoxDecoration(
@@ -105,7 +106,7 @@ class DetailsOrderCardApi extends StatelessWidget {
                               Icons.arrow_forward,
                               size: 14,
                               color: Colors.white,
-                            )))
+                            ))):Container()
                   ],
                 )
               ],

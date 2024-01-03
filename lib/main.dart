@@ -13,7 +13,7 @@ void main() async{
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: shared.getString('role')=='admin'?'/HomePage':'/HomePage',
+      initialRoute: shared.getString('token')==null ?'/LogInPage':'/HomePage',
       getPages: [
         GetPage(name: '/ShowProduct', page: () => const ShowProductPage()),
         GetPage(name: '/LogInPage', page: () => const LogInPage(),),

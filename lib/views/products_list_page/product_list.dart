@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/controller/homepage/get_all_products.dart';
+import 'package:pharmacy/main.dart';
 import 'package:pharmacy/models/product.dart';
 import 'package:pharmacy/views/products_list_page/productcard.dart';
 import 'package:pharmacy/views/viewall/view_all_page.dart';
-
 class ProductList extends StatelessWidget {
   ProductList({
     super.key,
@@ -15,11 +15,14 @@ class ProductList extends StatelessWidget {
   final getProductController = Get.put(GetAllProducts());
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<dynamic>(
-        future:type=="All Products"? getProductController.getAllProducts(kTokenTest):getProductController.getMostCommonProducts(kTokenTest),
+    return GetBuilder<GetAllProducts>(
+      init: GetAllProducts(),
+      builder: (controller){
+      return FutureBuilder<dynamic>(
+        future:type=="All Products"? getProductController.getAllProducts(shared.getString('token').toString()):getProductController.getMostCommonProducts(shared.getString('token').toString()),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            dynamic products=snapshot.data['products'];
+             controller.products=snapshot.data['products'];
             return Column(
               children: [
                 Container(
@@ -39,7 +42,7 @@ class ProductList extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: (){
-                          Get.to(ViewAllPage(products: products,title: type,));
+                          Get.to(ViewAllPage(products: controller.products,title: type,));
                         },
                         child: Text('View All')),
                     ],
@@ -51,10 +54,10 @@ class ProductList extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 40),
                       child: ListView.builder(
-                        itemCount: products.length,
+                        itemCount: controller.products!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return ProductCard(product: Product.fromJson(products[index]),);
+                            return ProductCard(product: Product.fromJson(controller.products![index]),);
                           })),
                 ),
               ],
@@ -68,5 +71,6 @@ class ProductList extends StatelessWidget {
             );
           }
         }));
+    });
   }
 }
