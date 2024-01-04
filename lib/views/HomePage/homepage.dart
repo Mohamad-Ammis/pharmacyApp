@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/views/NavBar/navbar_item.dart';
 import 'package:pharmacy/views/addproductPage/add_product_body.dart';
 import 'package:pharmacy/views/orderpage/allOrdersPage.dart';
 import 'package:pharmacy/views/products_list_page/products_page.dart';
-
+int selectedsa = 0;
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-int selectedsa = 0;
+
 List<bool> selected = [true, false, false, false, false];
 List pages = [
   const Expanded(child: ProductsPage()),
@@ -54,48 +55,39 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(children: [
-        Stack(
-          children: [
-            Container(
-              color: Colors.white,
-            ),
-            Container(
-              //margin: EdgeInsets.all(8.0),
-              height: MediaQuery.of(context).size.height,
-              width: 101.0,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 0, 0, 0),
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+        NavigationRail(
+          elevation: 10,
+          groupAlignment: 0.01,
+          backgroundColor: kMainColor,
+          onDestinationSelected: (newIndex ){
+            setState(() {
+              selectedsa = newIndex;
+            });
+          },
+          destinations: [
+            
+          NavigationRailDestination(
+            padding: EdgeInsets.only(bottom: 20),
+            icon: Icon(
+                FontAwesomeIcons.house,
+              ), label: Text(''),),
+              NavigationRailDestination(
+                padding: EdgeInsets.only(bottom: 20),
+                icon: Icon(
+                  FontAwesomeIcons.plus,
+                ),
+                label: Text(''),
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 200,
-                    child: Column(
-                      children: icon
-                          .map(
-                            (e) => NavBarItem(
-                              icon: e,
-                              selected: selected[icon.indexOf(e)],
-                              onTap: () {
-                                setState(() {
-                                  select(icon.indexOf(e));
-                                  selectedsa = icon.indexOf(e);
-                                });
-                              },
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ],
+              NavigationRailDestination(
+                padding: EdgeInsets.only(bottom: 20),
+                icon: Icon(
+                  FontAwesomeIcons.boxOpen,
+                ),
+                label: Text(''),
               ),
-            ),
-          ],
-        ),
-        pages[selectedsa]
+        ], selectedIndex: selectedsa),
+      pages[selectedsa],
+      
       ]),
     );
   }

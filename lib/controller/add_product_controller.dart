@@ -61,6 +61,7 @@ try{
       print(test.body);
       if (response.statusCode == 200) {
         print('done');
+        Get.snackbar("Successfully added", "Your product Added Successfully");
         // print(await response.stream.bytesToString());
       } else {
         print('error');

@@ -15,7 +15,7 @@ class DeleteProduct{
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         print('delete Products Successfully');
-        Get.snackbar('Error Happened', data['message']);
+        Get.snackbar('Deleted Successfully', data['message']);
         return jsonDecode(response.body);
       } else {
         //print("Error When Get All Products");

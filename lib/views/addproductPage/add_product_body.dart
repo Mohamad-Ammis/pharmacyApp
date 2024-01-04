@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy/constans.dart';
 import 'package:pharmacy/controller/add_product_controller.dart';
+import 'package:pharmacy/views/HomePage/homepage.dart';
 import 'package:pharmacy/views/addproductPage/CateField.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pharmacy/widgets/custom_text_field.dart';
@@ -665,6 +666,7 @@ class _AddProductBodyState extends State<AddProductBody> {
                                                         .validate() &&
                                                     _selectedfile!=null
                                                   ) {
+
                                                   print('before');
                                                   await controller.addProduct(
                                                       scName!,
@@ -681,7 +683,9 @@ class _AddProductBodyState extends State<AddProductBody> {
                                                       descAr!,
                                                       _selectedfile!);
                                                   print('after addprod');
-                                                  Get.toNamed('/HomePage');
+                                                  setState(() {
+                                                    selectedsa=0;
+                                                  });
                                                 }
                                               },
                                               child: Container(
